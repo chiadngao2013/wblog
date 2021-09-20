@@ -2,7 +2,7 @@ package com.example.wblog.mapper;
 
 import com.example.wblog.bean.Article;
 
-public interface Articlemapper {
+public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Article record);
