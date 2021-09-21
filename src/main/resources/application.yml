@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: wblog
+  datasource:
+    url: jdbc:mysql://localhost:3306/wblog?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: root
+    password: zhuzhu
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  #mybatis.type-aliases-package=com.example.wblog.mapper
+
+
+logging:
+  level:
+    org.springframework.security: info
