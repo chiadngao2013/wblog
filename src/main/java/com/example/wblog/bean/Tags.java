@@ -7,27 +7,26 @@ import lombok.Data;
  * tags
  * @author 
  */
-@Data
-public class Tags implements Serializable {
-    public Integer getId() {
+public class Tags {
+    private Long id;
+    private String tagName;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTagname() {
-        return tagname;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagname(String tagname) {
-        this.tagname = tagname;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
-    private Integer id;
-
-    private String tagname;
 
     private static final long serialVersionUID = 1L;
 }

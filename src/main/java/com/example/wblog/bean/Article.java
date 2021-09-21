@@ -3,50 +3,83 @@ package com.example.wblog.bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * article
  * @author 
  */
-public class Article implements Serializable {
-    private Integer id;
-
+public class Article {
+    private Long id;
     private String title;
-
-    /**
-     * md文件源码
-     */
-    private String mdcontent;
-
-    /**
-     * html源码
-     */
-    private String htmlcontent;
-
+    private String mdContent;
+    private String htmlContent;
     private String summary;
-
-    private Integer cid;
-
-    private Integer uid;
-
-    private Timestamp publishdate;
-
-    private Timestamp edittime;
-
-    /**
-     * 0表示草稿箱，1表示已发表，2表示已删除
-     */
+    private Long cid;
+    private Long uid;
+    private Timestamp publishDate;
     private Integer state;
+    private Integer pageView;
+    private Timestamp editTime;
+    private String[] dynamicTags;
+    private String nickname;
+    private String cateName;
+    private List<Tags> tags;
+    private String stateStr;
 
-    private Integer pageview;
+    public String getStateStr() {
+        return stateStr;
+    }
 
-    private static final long serialVersionUID = 1L;
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
+    }
 
-    public Integer getId() {
+    public List<Tags> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
+    }
+
+    public String[] getDynamicTags() {
+        return dynamicTags;
+    }
+
+    public void setDynamicTags(String[] dynamicTags) {
+        this.dynamicTags = dynamicTags;
+    }
+
+    public Timestamp getEditTime() {
+        return editTime;
+    }
+
+    public void setEditTime(Timestamp editTime) {
+        this.editTime = editTime;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,20 +91,20 @@ public class Article implements Serializable {
         this.title = title;
     }
 
-    public String getMdcontent() {
-        return mdcontent;
+    public String getMdContent() {
+        return mdContent;
     }
 
-    public void setMdcontent(String mdcontent) {
-        this.mdcontent = mdcontent;
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
     }
 
-    public String getHtmlcontent() {
-        return htmlcontent;
+    public String getHtmlContent() {
+        return htmlContent;
     }
 
-    public void setHtmlcontent(String htmlcontent) {
-        this.htmlcontent = htmlcontent;
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     public String getSummary() {
@@ -82,36 +115,28 @@ public class Article implements Serializable {
         this.summary = summary;
     }
 
-    public Integer getCid() {
+    public Long getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(Long cid) {
         this.cid = cid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
-    public Date getPublishdate() {
-        return publishdate;
+    public Timestamp getPublishDate() {
+        return publishDate;
     }
 
-    public void setPublishdate(Timestamp publishdate) {
-        this.publishdate = publishdate;
-    }
-
-    public Date getEdittime() {
-        return edittime;
-    }
-
-    public void setEdittime(Timestamp edittime) {
-        this.edittime = edittime;
+    public void setPublishDate(Timestamp publishDate) {
+        this.publishDate = publishDate;
     }
 
     public Integer getState() {
@@ -122,11 +147,11 @@ public class Article implements Serializable {
         this.state = state;
     }
 
-    public Integer getPageview() {
-        return pageview;
+    public Integer getPageView() {
+        return pageView;
     }
 
-    public void setPageview(Integer pageview) {
-        this.pageview = pageview;
+    public void setPageView(Integer pageView) {
+        this.pageView = pageView;
     }
 }

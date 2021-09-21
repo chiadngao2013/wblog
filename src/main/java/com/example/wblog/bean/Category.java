@@ -9,25 +9,12 @@ import lombok.Data;
  * category
  * @author 
  */
-@Data
-public class Category implements Serializable {
+public class Category {
+    private Long id;
+    private String cateName;
+    private Timestamp date;
+
     public Category() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCatename() {
-        return catename;
-    }
-
-    public void setCatename(String catename) {
-        this.catename = catename;
     }
 
     public Timestamp getDate() {
@@ -38,11 +25,19 @@ public class Category implements Serializable {
         this.date = date;
     }
 
-    private Integer id;
+    public Long getId() {
+        return id;
+    }
 
-    private String catename;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    private Timestamp date;
+    public String getCateName() {
+        return cateName;
+    }
 
-    private static final long serialVersionUID = 1L;
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
+    }
 }

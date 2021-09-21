@@ -1,158 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.wblog.mapper.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.example.wblog.bean.Article">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="mdContent" jdbcType="VARCHAR" property="mdcontent" />
-    <result column="htmlContent" jdbcType="VARCHAR" property="htmlcontent" />
-    <result column="summary" jdbcType="VARCHAR" property="summary" />
-    <result column="cid" jdbcType="INTEGER" property="cid" />
-    <result column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="publishDate" jdbcType="TIMESTAMP" property="publishdate" />
-    <result column="editTime" jdbcType="TIMESTAMP" property="edittime" />
-    <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="pageView" jdbcType="INTEGER" property="pageview" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, title, mdContent, htmlContent, summary, cid, `uid`, publishDate, editTime, `state`, 
-    pageView
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from article
-    where id = #{id,jdbcType=INTEGER}
+  <insert id="addNewArticle" parameterType="com.example.wblog.bean.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article SET title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},uid=#{uid},publishDate=#{publishDate},state=#{state},editTime=#{editTime}
+    </insert>
+  <update id="pvIncrement" parameterType="Long">
+        UPDATE article set pageView=pageView+1 WHERE id=#{aid}
+    </update>
+  <update id="updateArticle" parameterType="com.example.wblog.bean.Article">
+    UPDATE article SET
+    title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime}
+    <if test="state==1">
+      ,state=1
+    </if>
+    <if test="publishDate!=null">
+      ,publishDate=#{publishDate}
+    </if>
+    WHERE id=#{id}
+  </update>
+  <select id="getArticleByState" resultType="com.example.wblog.bean.Article">
+    SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`nickname`,c.`cateName`,a.uid FROM article a,user
+    u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id`
+    <if test="state!=-2">
+      and a.uid=#{uid}
+    </if>
+    <if test="state!=-1 and state!=-2">
+      and a.state=#{state}
+    </if>
+    <if test="state==-2">
+      and a.state=1
+    </if>
+    <if test="keywords!=null">
+      AND title LIKE concat('%',#{keywords},'%')
+    </if>
+    ORDER BY a.editTime DESC limit #{start},#{count};
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from article
-    where id = #{id,jdbcType=INTEGER}
+  <select id="getArticleByStateByAdmin" resultType="com.example.wblog.bean.Article">
+    SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`nickname`,c.`cateName`,a.uid FROM article a,user
+    u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id` and a.state=1
+    <if test="keywords!=null">
+      AND title LIKE concat('%',#{keywords},'%')
+    </if>
+    ORDER BY a.editTime DESC limit #{start},#{count};
+  </select>
+  <select id="getArticleCountByState" resultType="int">
+    SELECT count(*) FROM article
+    <where>
+      <if test="state!=-1">
+        AND state=#{state}
+      </if>
+      <if test="uid!=null">
+        AND uid=#{uid}
+      </if>
+      <if test="keywords!=null">
+        AND title LIKE concat('%',#{keywords},'%')
+      </if>
+    </where>
+  </select>
+  <update id="updateArticleState">
+    UPDATE article SET state=#{state} WHERE id IN
+    <foreach collection="aids" item="aid" separator="," open="(" close=")">
+      #{aid}
+    </foreach>
+  </update>
+  <update id="updateArticleStateById" >
+        UPDATE article SET state=#{state} WHERE id = #{articleId}
+    </update>
+  <delete id="deleteArticleById">
+    DELETE FROM article WHERE id IN
+    <foreach collection="aids" item="aid" open="(" close=")" separator=",">
+      #{aid}
+    </foreach>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.wblog.bean.Article" useGeneratedKeys="true">
-    insert into article (title, mdContent, htmlContent, 
-      summary, cid, `uid`, 
-      publishDate, editTime, `state`, 
-      pageView)
-    values (#{title,jdbcType=VARCHAR}, #{mdcontent,jdbcType=VARCHAR}, #{htmlcontent,jdbcType=VARCHAR}, 
-      #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
-      #{publishdate,jdbcType=TIMESTAMP}, #{edittime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
-      #{pageview,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.wblog.bean.Article" useGeneratedKeys="true">
-    insert into article
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="mdcontent != null">
-        mdContent,
-      </if>
-      <if test="htmlcontent != null">
-        htmlContent,
-      </if>
-      <if test="summary != null">
-        summary,
-      </if>
-      <if test="cid != null">
-        cid,
-      </if>
-      <if test="uid != null">
-        `uid`,
-      </if>
-      <if test="publishdate != null">
-        publishDate,
-      </if>
-      <if test="edittime != null">
-        editTime,
-      </if>
-      <if test="state != null">
-        `state`,
-      </if>
-      <if test="pageview != null">
-        pageView,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="mdcontent != null">
-        #{mdcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="htmlcontent != null">
-        #{htmlcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null">
-        #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="cid != null">
-        #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="publishdate != null">
-        #{publishdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="edittime != null">
-        #{edittime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="pageview != null">
-        #{pageview,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.wblog.bean.Article">
-    update article
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="mdcontent != null">
-        mdContent = #{mdcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="htmlcontent != null">
-        htmlContent = #{htmlcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null">
-        summary = #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="cid != null">
-        cid = #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null">
-        `uid` = #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="publishdate != null">
-        publishDate = #{publishdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="edittime != null">
-        editTime = #{edittime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        `state` = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="pageview != null">
-        pageView = #{pageview,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.wblog.bean.Article">
-    update article
-    set title = #{title,jdbcType=VARCHAR},
-      mdContent = #{mdcontent,jdbcType=VARCHAR},
-      htmlContent = #{htmlcontent,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      cid = #{cid,jdbcType=INTEGER},
-      `uid` = #{uid,jdbcType=INTEGER},
-      publishDate = #{publishdate,jdbcType=TIMESTAMP},
-      editTime = #{edittime,jdbcType=TIMESTAMP},
-      `state` = #{state,jdbcType=INTEGER},
-      pageView = #{pageview,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  <select id="getArticleById" parameterType="Long" resultMap="BaseResultMap">
+        SELECT a.*,t.`tagName`,t.`id` AS tid,u.`nickname`,c.`cateName` FROM article a LEFT JOIN article_tags ats ON a.`id`=ats.`aid` LEFT JOIN tags t ON ats.`tid`=t.`id` LEFT JOIN user u ON a.`uid`=u.`id` LEFT JOIN category c ON a.`cid`=c.`id` WHERE a.id=#{aid}
+    </select>
+
+  <resultMap id="BaseResultMap" type="com.example.wblog.bean.Article">
+    <id column="id" property="id"/>
+    <result column="title" property="title"/>
+    <result column="cid" property="cid"/>
+    <result column="uid" property="uid"/>
+    <result column="publishDate" property="publishDate"/>
+    <result column="editTime" property="editTime"/>
+    <result column="state" property="state"/>
+    <result column="pageView" property="pageView"/>
+    <result column="mdContent" property="mdContent"/>
+    <result column="htmlContent" property="htmlContent"/>
+    <result column="summary" property="summary"/>
+    <result column="nickname" property="nickname"/>
+    <result column="cateName" property="cateName"/>
+    <collection property="tags" ofType="com.example.wblog.bean.Tags" column="tagName">
+      <id property="id" column="tid"/>
+      <result property="tagName" column="tagName"/>
+    </collection>
+  </resultMap>
+
+  <insert id="pvStatisticsPerDay">
+        INSERT INTO pv(countDate,pv,uid) SELECT CURRENT_DATE(),totalPv-pv,t.`uid` FROM pvview p,totalpvview t WHERE p.`uid`=t.`uid`
+    </insert>
+
+  <select id="getCategories" resultType="String" parameterType="long">
+        SELECT countDate from pv WHERE uid=#{uid} ORDER by countDate limit 7
+    </select>
+  <select parameterType="long" id="getDataStatistics" resultType="int">
+        SELECT pv from pv WHERE uid=#{uid} ORDER by countDate limit 7
+    </select>
 </mapper>

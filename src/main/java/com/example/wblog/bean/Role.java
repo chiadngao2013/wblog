@@ -7,21 +7,23 @@ import lombok.Data;
  * roles
  * @author 
  */
-@Data
-public class Role implements Serializable {
+public class Role {
+    private Long id;
+    private String name;
+
     public Role() {
     }
 
-    public Role(Integer id, String name) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,9 +35,6 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    private Integer id;
-
-    private String name;
 
     private static final long serialVersionUID = 1L;
 }
