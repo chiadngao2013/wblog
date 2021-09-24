@@ -5,6 +5,7 @@ spring:
     url: jdbc:mysql://localhost:3306/wblog?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     username: root
     password: zhuzhu
+    driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   config-location: classpath:/mybatis-config.xml
   #mybatis.type-aliases-package=com.example.wblog.mapper
