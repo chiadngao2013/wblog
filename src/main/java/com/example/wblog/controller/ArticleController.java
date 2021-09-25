@@ -41,10 +41,10 @@ public class ArticleController {
         if (result == 1) {
             return new RespBean("success", article.getId() + "");
         } else {
-            return new RespBean("error", article.getState() == 0 ? "ÎÄÕÂ±£´æÊ§°Ü!" : "ÎÄÕÂ·¢±íÊ§°Ü!");
+            return new RespBean("error", article.getState() == 0 ? "æ–‡ç« ä¿å­˜å¤±è´¥!" : "æ–‡ç« å‘è¡¨å¤±è´¥!");
         }
     }
-//    Í¼Æ¬ÉÏ´«
+//    å›¾ç‰‡ä¸Šä¼ 
     @RequestMapping(value = "/uploadimg", method = RequestMethod.POST)
     public RespBean uploadImg(HttpServletRequest req, MultipartFile image) {
         StringBuffer url = new StringBuffer();
@@ -61,7 +61,7 @@ public class ArticleController {
                 .append(req.getServerPort())
                 .append(req.getContextPath())
                 .append(filePath);
-        String imgName = UUID.randomUUID() + "_" + image.getOriginalFilename().replaceAll(" ", "");
+        String imgName = UUID.randomUUID() + "_" + Objects.requireNonNull(image.getOriginalFilename()).replaceAll(" ", "");
         try {
             IOUtils.write(image.getBytes(), new FileOutputStream(new File(imgFolder, imgName)));
             url.append("/").append(imgName);
@@ -69,7 +69,7 @@ public class ArticleController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new RespBean("error", "ÉÏ´«Ê§°Ü!");
+        return new RespBean("error", "ä¸Šä¼ å¤±è´¥!");
     }
     @RequestMapping(value = "/{aid}", method = RequestMethod.GET)
     public Article getArticleById(@PathVariable Long aid) {
@@ -79,19 +79,19 @@ public class ArticleController {
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
     public RespBean updateArticleState(Long[] aids, Integer state) {
         if (articleService.updateArticleState(aids, state) == aids.length) {
-            return new RespBean("success", "É¾³ı³É¹¦!");
+            return new RespBean("success", "åˆ é™¤æˆåŠŸ!");
         }
-        return new RespBean("error", "É¾³ıÊ§°Ü!");
+        return new RespBean("error", "åˆ é™¤å¤±è´¥!");
     }
 
     @RequestMapping(value = "/restore", method = RequestMethod.PUT)
     public RespBean restoreArticle(Integer articleId) {
         if (articleService.restoreArticle(articleId) == 1) {
-            return new RespBean("success", "»¹Ô­³É¹¦!");
+            return new RespBean("success", "è¿˜åŸæˆåŠŸ!");
         }
-        return new RespBean("error", "»¹Ô­Ê§°Ü!");
+        return new RespBean("error", "è¿˜åŸå¤±è´¥!");
     }
-//    Í³¼ÆÒ³Ãæ
+//    ç»Ÿè®¡é¡µé¢
     @RequestMapping("/dataStatistics")
     public Map<String,Object> dataStatistics() {
         Map<String, Object> map = new HashMap<>();

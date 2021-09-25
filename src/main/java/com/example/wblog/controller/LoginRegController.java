@@ -33,6 +33,7 @@ public class LoginRegController {
 
     @PostMapping("/reg")
     public RespBean reg(User user) {
+        RespBean reg = new RespBean();
         int result = userService.reg(user);
         if (result == 0) {
             //成功
@@ -43,5 +44,7 @@ public class LoginRegController {
             //失败
             return new RespBean("error", "注册失败!");
         }
+
     }
 }
+

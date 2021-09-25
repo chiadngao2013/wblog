@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+//用于统计每日博客平台的使用量
 public class DataStatisticsComponent {
     @Autowired
     ArticleService articleService;

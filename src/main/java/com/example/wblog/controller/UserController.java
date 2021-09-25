@@ -39,7 +39,9 @@ public class UserController {
     public Boolean isAdmin() {
         List<GrantedAuthority> authorities = Util.getCurrentUser().getAuthorities();
         for (GrantedAuthority authority : authorities) {
-            if (authority.getAuthority().contains("超级管理员")) {
+            if (authority
+                    .getAuthority()
+                    .contains("超级管理员")) {
                 return true;
             }
         }

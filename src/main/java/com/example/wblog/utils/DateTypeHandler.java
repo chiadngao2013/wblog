@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 
 @MappedJdbcTypes(JdbcType.DATE)
 @MappedTypes(String.class)
+//日期类型的管理
 public class DateTypeHandler implements TypeHandler<String> {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 

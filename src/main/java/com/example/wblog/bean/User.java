@@ -65,23 +65,27 @@ public class User implements UserDetails {
 
     @Override
     @JsonIgnore
+//    账户是否过期
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
     @JsonIgnore
+//    账户是否被锁定
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
     @JsonIgnore
+//    账户密码是否过期
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+//    表示该账户是否启用，默认为1(启用)，0
     public boolean isEnabled() {
         return enabled;
     }
@@ -92,6 +96,7 @@ public class User implements UserDetails {
 
     @Override
     @JsonIgnore
+//  获取用户权限，其实就是将用户的数据从roles表转换成list返回
     public List<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
