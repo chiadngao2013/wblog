@@ -1,5 +1,6 @@
 package com.example.wblog.service;
 
+import com.example.wblog.aspect.MetricTime;
 import com.example.wblog.bean.Role;
 import com.example.wblog.bean.User;
 import com.example.wblog.mapper.RolesMapper;
@@ -27,6 +28,8 @@ public class UserService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     @Override
+//    在需要监控的方法添加注解
+    @MetricTime("loadUserByUsername")
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 //        根据注入的usermapper查询数据库中有没有这个用户
         User user = userMapper.loadUserByUsername(s);
