@@ -36,6 +36,7 @@
             <version>1.3.1</version>
         </dependency>
         <dependency>
+<!--Apache的开源项目，可以用来生成MD5消息摘要，后文中将对密码进行简单的处理-->
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
