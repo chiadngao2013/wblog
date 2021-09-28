@@ -10,6 +10,8 @@ mybatis:
   config-location: classpath:/mybatis-config.xml
   #mybatis.type-aliases-package=com.example.wblog.mapper
 
+server:
+  port: 8081
 
 logging:
   level:
