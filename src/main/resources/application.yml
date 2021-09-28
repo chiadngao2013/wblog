@@ -11,7 +11,11 @@ mybatis:
   #mybatis.type-aliases-package=com.example.wblog.mapper
 
 server:
+<<<<<<< HEAD
   port: 8848
+=======
+  port: 8083
+>>>>>>> d975698c08d700782505c4d50cea9db9f7374d52
 
 logging:
   level:
