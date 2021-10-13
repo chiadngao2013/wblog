@@ -17,3 +17,8 @@ server:
 logging:
   level:
     org.springframework.security: info
+  file:
+    name: E:/LearnPython/code/wblog/logs/log.log
+  logback:
+    rollingpolicy:
+      max-history: 7

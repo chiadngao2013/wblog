@@ -1,0 +1,35 @@
+2021-10-13 11:48:19.461  INFO 14508 --- [restartedMain] com.example.wblog.WblogApplication       : Starting WblogApplication using Java 14 on DESKTOP-KFVCDKU with PID 14508 (E:\LearnPython\code\wblog\target\classes started by zhuzhu in E:\LearnPython\code\wblog)
+2021-10-13 11:48:19.462  INFO 14508 --- [restartedMain] com.example.wblog.WblogApplication       : No active profile set, falling back to default profiles: default
+2021-10-13 11:48:19.501  INFO 14508 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-10-13 11:48:19.501  INFO 14508 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-10-13 11:48:20.463  INFO 14508 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8848 (http)
+2021-10-13 11:48:20.469  INFO 14508 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-10-13 11:48:20.470  INFO 14508 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.52]
+2021-10-13 11:48:20.532  INFO 14508 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-10-13 11:48:20.532  INFO 14508 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1030 ms
+2021-10-13 11:48:20.979  INFO 14508 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2021-10-13 11:48:21.184  INFO 14508 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/blogimg/**'] with []
+2021-10-13 11:48:21.185  INFO 14508 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/index.html'] with []
+2021-10-13 11:48:21.185  INFO 14508 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/static/**'] with []
+2021-10-13 11:48:21.185  INFO 14508 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/reg'] with []
+2021-10-13 11:48:21.210  INFO 14508 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2bef063a, org.springframework.security.web.context.SecurityContextPersistenceFilter@219ad2e5, org.springframework.security.web.header.HeaderWriterFilter@5e6170e3, org.springframework.security.web.authentication.logout.LogoutFilter@3851e406, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@29597937, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e396d93, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2416ec18, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c6750d9, org.springframework.security.web.session.SessionManagementFilter@89cfc72, org.springframework.security.web.access.ExceptionTranslationFilter@499a4c20, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@68a70ad6]
+2021-10-13 11:48:21.262  INFO 14508 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-13 11:48:21.278  WARN 14508 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8848 is already in use
+2021-10-13 11:48:21.282  INFO 14508 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2021-10-13 11:48:21.292  INFO 14508 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-10-13 11:48:21.304 ERROR 14508 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8848 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8848 or configure this application to listen on another port.
+
