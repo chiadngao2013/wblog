@@ -1,0 +1,120 @@
+@startuml
+'https://plantuml.com/class-diagram
+title Spring Security处理登录请求各类型间的关系与重要字段的解释
+note “渐变色的类和接口都是从 Spring Security中引入的” as N1
+
+
+
+
+
+
+
+interface UserDtails #back:7FFFAA|white;header:7FFFAA/white{
+Collection<? extends GrantedAuthority> getAuthorities()
++enabled : boolean
++boolean isAccountNonExpired()
++boolean isAccountNonLocked()
++boolean isCredentialsNonExpired()
++boolean isEnabled()
++String getPassword();
++String getUsername();
+}
+
+class User implements UserDtails
+User "1"*-->"many" Role
+User ..> Role
+class User {
++enabled : boolean
++roles : List<Role>
++boolean isAccountNonExpired()
++boolean isAccountNonLocked()
++boolean isCredentialsNonExpired()
++boolean isEnabled()
++List<GrantedAuthority> getAuthorities()
++String getPassword();
++String getUsername();
+}
+class User
+note right:实现完UserDtails后\n下面的几个方法都要实现一次
+note left of User::getAuthorities
+  将roles的数据转换成List返回
+end note
+
+
+class UserService implements UserDetailsService
+UserService ..> User
+UserService ..> User :<<create>>
+UserService ..> UserDetails
+UserService "1"*-->"1" UserMapper
+UserService ..> Role
+class UserService {
+userMapper : UserMapper
+rolesMapper :RolesMapper
++UserDetails loadUserByUsername(String)
++int updateUserEnabled(Boolean enabled, Long uid)
+}
+class UserService
+note right:实现完接口后\nloadUserByUsername用来\n根据注入的两个Mapper来查询\n用户信息,结果放入User对象返回
+
+
+
+UserMapper ..> User
+UserMapper ..> Role
+interface UserMapper {
++User loadUserByUsername(String)
+}
+
+
+UserDetailsService ..> UserDetails
+interface UserDetailsService #back:7FFFAA|white;header:7FFFAA/white {
++UserDtails loadUserByUsername(String)
+}
+
+
+WebSecurityConfigurerAdapter ..> UserDetailsService
+class WebSecurityConfigurerAdapter #back:7FFFAA|white;header:7FFFAA/white{
+
+}
+
+
+class AuthenticationAccessDeniedHandler implements AccessDeniedHandler
+class AuthenticationAccessDeniedHandler {
++void handle(HttpServletRequest, HttpServletResponse, AccessDeniedException)
+
+}
+
+interface AccessDeniedHandler #back:7FFFAA|white;header:7FFFAA/white{
++void handle(HttpServletRequest, HttpServletResponse, AccessDeniedException)
+}
+
+
+WebSecurityConfig "1"*-->"1" UserService
+WebSecurityConfig --|> WebSecurityConfigurerAdapter
+WebSecurityConfig ..> AuthenticationAccessDeniedHandler :<<create>>
+WebSecurityConfig ..> AccessDeniedHandler
+class WebSecurityConfig {
+UserService userService
+#void configure(AuthenticationManagerBuilder)
+#void configure(HttpSecurity)
+#void configure(WebSecurity)
++AccessDeniedHandler getAccessDeniedHandler()
+}
+note left of WebSecurityConfig::"configure(AuthenticationManagerBuilder)"
+  此方法用来配置登录认证方式，会自动调用
+  传入的userService里面的方法来进行验证
+end note
+note right of WebSecurityConfig::"configure(HttpSecurity)"
+  用来配置只有管理员才能访问的路径
+end note
+note right of WebSecurityConfig::"configure(WebSecurity)"
+  配置游客权限也能访问的路径
+end note
+
+
+
+class Role {
+-id : Long
+-name : String
+}
+
+@enduml
