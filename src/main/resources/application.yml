@@ -14,11 +14,11 @@ server:
   port: 8848
 
 
-logging:
-  level:
-    org.springframework.security: info
-  file:
-    name: E:/LearnPython/code/wblog/logs/log.log
-  logback:
-    rollingpolicy:
-      max-history: 7
+#logging:
+#  level:
+#    org.springframework.security: info
+#  file:
+#    name: E:/LearnPython/code/wblog/logs/log.log
+#  logback:
+#    rollingpolicy:
+#      max-history: 7
