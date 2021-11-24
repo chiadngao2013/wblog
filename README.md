@@ -11,7 +11,7 @@
 
 #### 文章列表
 
-![文章](https://github.com/chiadngao2013/wblog/blob/master/iamges/article.png)
+![文章](https://github.com/chiadngao2013/wblog/blob/master/iamges/articles.png)
 
 #### 发表文章
 
